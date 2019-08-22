@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="transparent">#0FFF</color>
+    <color name="code_edit_text_bottom_line">#333333</color>
+
+</resources>
