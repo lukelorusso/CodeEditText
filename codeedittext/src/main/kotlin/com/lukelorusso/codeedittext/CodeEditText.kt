@@ -2,26 +2,49 @@ package com.lukelorusso.codeedittext
 
 import android.content.Context
 import android.text.Editable
+import android.text.InputFilter
 import android.text.TextWatcher
 import android.util.AttributeSet
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.FrameLayout
+import android.widget.TextView
 import kotlinx.android.synthetic.main.layout_code_edit_text.view.*
 
-class CodeEditText constructor(context: Context, attrs: AttributeSet) :
-        FrameLayout(context, attrs) {
 
-    init {
-        inflate(context, R.layout.layout_code_edit_text, this)
-    }
+class CodeEditText constructor(context: Context, attrs: AttributeSet) :
+    FrameLayout(context, attrs) {
 
     companion object {
-        private const val LENGTH_CODE_COMPLETE = 6
+        private const val DEFAULT_CODE_LENGTH = 4
     }
 
+    var codeLength: Int = DEFAULT_CODE_LENGTH
+        set(value) {
+            field = value
+            if (initEnded) onAttachedToWindow()
+        }
     private var code: String = ""
     private var onCodeChangedListener: ((Pair<String, Boolean>) -> Unit)? = null
+    private var initEnded =
+        false // if true allows the view to be updated after setting an attribute programmatically
+
+    init {
+        init(context, attrs)
+    }
+
+    private fun init(context: Context, attrs: AttributeSet) {
+        inflate(context, R.layout.layout_code_edit_text, this)
+
+        val attributes = context.obtainStyledAttributes(attrs, R.styleable.CodeEditText, 0, 0)
+        try {
+            codeLength = attributes.getInt(R.styleable.CodeEditText_cet_code_length, codeLength)
+        } finally {
+            attributes.recycle()
+        }
+
+        initEnded = true
+    }
 
     fun setOnCodeChangedListener(listener: ((Pair<String, Boolean>) -> Unit)?) {
         this.onCodeChangedListener = listener
@@ -30,66 +53,63 @@ class CodeEditText constructor(context: Context, attrs: AttributeSet) :
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
         if (!isInEditMode) {
-            editCodeReal.addTextChangedListener(object : TextWatcher {
-                override fun beforeTextChanged(
-                        s: CharSequence,
-                        start: Int,
-                        count: Int,
-                        after: Int
-                ) {
-                }
+            llCodeWrapper.removeAllViews()
+            for (i in 0 until codeLength) {
+                View.inflate(
+                    context,
+                    R.layout.item_code_edit_text,
+                    findViewById(R.id.llCodeWrapper)
+                )
+            }
 
-                override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-                    if (before > 0) {
-                        // Remove last char
-                        if (code.isNotEmpty()) {
-                            code = code.substring(0, code.length - 1)
-                        }
-                    } else if (code.length < LENGTH_CODE_COMPLETE && s.isNotEmpty()) {
-                        val unicodeChar = s[s.length - 1]
-                        code += unicodeChar
-                    }
+            editCodeReal.filters = arrayOf<InputFilter>(InputFilter.LengthFilter(codeLength))
+            editCodeReal.removeTextChangedListener(textChangedListener)
+            editCodeReal.addTextChangedListener(textChangedListener)
 
-                    showCode()
-                    notifyCodeChanged()
-                }
-
-                override fun afterTextChanged(s: Editable) {}
-            })
-
-            layoutCode.setOnClickListener { editCodeReal.showKeyboard() }
+            llCodeWrapper.setOnClickListener { editCodeReal.showKeyboard() }
         }
+    }
+
+    private val textChangedListener = object : TextWatcher {
+        override fun beforeTextChanged(
+            s: CharSequence,
+            start: Int,
+            count: Int,
+            after: Int
+        ) {
+        }
+
+        override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+            if (before > 0) {
+                // Remove last char
+                if (code.isNotEmpty()) {
+                    code = code.substring(0, code.length - 1)
+                }
+            } else if (code.length < codeLength && s.isNotEmpty()) {
+                val unicodeChar = s[s.length - 1]
+                code += unicodeChar
+            }
+
+            showCode()
+            notifyCodeChanged()
+        }
+
+        override fun afterTextChanged(s: Editable) {}
     }
 
     private fun showCode() {
-        textViewCode1.text = ""
-        textViewCode2.text = ""
-        textViewCode3.text = ""
-        textViewCode4.text = ""
-        textViewCode5.text = ""
-        textViewCode6.text = ""
-
-        if (code.isNotEmpty()) {
-            textViewCode1.text = code.getLetterAt(0)
-            if (code.length >= 2) {
-                textViewCode2.text = code.getLetterAt(1)
-                if (code.length >= 3) {
-                    textViewCode3.text = code.getLetterAt(2)
-                    if (code.length >= 4) {
-                        textViewCode4.text = code.getLetterAt(3)
-                        if (code.length >= 5) {
-                            textViewCode5.text = code.getLetterAt(4)
-                            if (code.length >= 6) {
-                                textViewCode6.text = code.getLetterAt(5)
-                            }
-                        }
-                    }
-                }
-            }
+        for (i in 0 until llCodeWrapper.childCount) {
+            llCodeWrapper.getChildAt(i).getTextView().text =
+                if (code.length > i)
+                    code.getLetterAt(i)
+                else
+                    ""
         }
     }
 
-    private fun notifyCodeChanged(): Boolean = (code.length == LENGTH_CODE_COMPLETE).apply {
+    private fun View.getTextView(): TextView = findViewById(R.id.tvCode)
+
+    private fun notifyCodeChanged(): Boolean = (code.length == codeLength).apply {
         onCodeChangedListener?.invoke(Pair(code, this))
     }
 

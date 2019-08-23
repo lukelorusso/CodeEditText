@@ -3,8 +3,9 @@
 
     <color name="colorPrimary">#4E0085</color>
     <color name="colorPrimaryDark">#290057</color>
-    <color name="colorAccent">#BBFF01</color>
+    <color name="colorAccent">#0199FF</color>
 
-    <color name="code_view_bottom_line">@color/colorAccent</color>
+    <color name="code_edit_text_bottom_line">@color/colorAccent</color>
+    <color name="code_edit_text_background">#330199FF</color>
 
 </resources>

@@ -5,163 +5,29 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
+        android:id="@+id/llCodeWrapper"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:baselineAligned="false"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <LinearLayout
-            android:id="@+id/layoutCode"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:baselineAligned="false"
-            android:orientation="horizontal"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <FrameLayout
-                android:layout_width="42dp"
-                android:layout_height="59dp"
-                android:layout_margin="3.5dp"
-                android:background="@drawable/shape_code_edit_text">
-
-                <TextView
-                    android:id="@+id/textViewCode1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:textSize="45sp" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_gravity="bottom"
-                    android:background="@color/code_edit_text_bottom_line" />
-
-            </FrameLayout>
-
-            <FrameLayout
-                android:layout_width="42dp"
-                android:layout_height="59dp"
-                android:layout_margin="3.5dp"
-                android:background="@drawable/shape_code_edit_text">
-
-                <TextView
-                    android:id="@+id/textViewCode2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:textSize="45sp" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_gravity="bottom"
-                    android:background="@color/code_edit_text_bottom_line" />
-
-            </FrameLayout>
-
-            <FrameLayout
-                android:layout_width="42dp"
-                android:layout_height="59dp"
-                android:layout_margin="3.5dp"
-                android:background="@drawable/shape_code_edit_text">
-
-                <TextView
-                    android:id="@+id/textViewCode3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:textSize="45sp" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_gravity="bottom"
-                    android:background="@color/code_edit_text_bottom_line" />
-
-            </FrameLayout>
-
-            <FrameLayout
-                android:layout_width="42dp"
-                android:layout_height="59dp"
-                android:layout_margin="3.5dp"
-                android:background="@drawable/shape_code_edit_text">
-
-                <TextView
-                    android:id="@+id/textViewCode4"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:textSize="45sp" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_gravity="bottom"
-                    android:background="@color/code_edit_text_bottom_line" />
-
-            </FrameLayout>
-
-            <FrameLayout
-                android:layout_width="42dp"
-                android:layout_height="59dp"
-                android:layout_margin="3.5dp"
-                android:background="@drawable/shape_code_edit_text">
-
-                <TextView
-                    android:id="@+id/textViewCode5"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:textSize="45sp" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_gravity="bottom"
-                    android:background="@color/code_edit_text_bottom_line" />
-
-            </FrameLayout>
-
-            <FrameLayout
-                android:layout_width="42dp"
-                android:layout_height="59dp"
-                android:layout_margin="3.5dp"
-                android:background="@drawable/shape_code_edit_text">
-
-                <TextView
-                    android:id="@+id/textViewCode6"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:textSize="45sp" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_gravity="bottom"
-                    android:background="@color/code_edit_text_bottom_line" />
-
-            </FrameLayout>
-
-        </LinearLayout>
-
-        <EditText
-            android:id="@+id/editCodeReal"
-            android:layout_width="1dp"
-            android:layout_height="1dp"
-            android:background="@null"
-            android:cursorVisible="false"
-            android:digits="0123456789"
-            android:inputType="number|none"
-            android:textSize="0sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/layoutCode"
-            tools:ignore="Autofill,LabelFor,TextFields" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    <EditText
+        android:id="@+id/editCodeReal"
+        android:layout_width="1dp"
+        android:layout_height="1dp"
+        android:background="@null"
+        android:cursorVisible="false"
+        android:digits="0123456789"
+        android:inputType="number|none"
+        android:textSize="0sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/layoutCode"
+        tools:ignore="Autofill,LabelFor,TextFields" />
 
 </FrameLayout>
