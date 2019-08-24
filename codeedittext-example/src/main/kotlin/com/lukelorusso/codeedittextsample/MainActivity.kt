@@ -20,6 +20,7 @@ class MainActivity : AppCompatActivity() {
         //cetMyCode.inputType = InputType.TYPE_CLASS_TEXT
         //cetMyCode.maskTheCode = true
         //cetMyCode.codeMaskChar = '#'
+        //cetMyCode.scrollDurationInMillis = 300
         cetMyCode.setOnCodeChangedListener { (code, completed) ->
             Log.d("CodeEditText", "text: \"$code\"")
             if (completed) hideKeyboard()

@@ -27,5 +27,4 @@ dependencies {
     implementation project(':codeedittext')
     implementation kotlinStdlib
     implementation androidXAppCompat
-    implementation constraintLayout
 }

@@ -5,11 +5,6 @@ VerticalSeekBar
 
 ## Presentation ##
 
-![Demo 1](press/demo1.gif)
-![Demo 2](press/demo2.gif)
-![Demo 3](press/demo3.gif)
-![Demo 4](press/demo4.gif)
-
 This is the source code of an Android library: `-=:[ CodeEditText ]:=-`
 
 - - -
@@ -18,16 +13,21 @@ This is the source code of an Android library: `-=:[ CodeEditText ]:=-`
 
 *"Input codes easily, numbers or alphabetical, long or short, visible or masked, shown as you like!"*  
 
-**Introducing a fancy EditText, redesigned for codes input and highly customizable.**
+**Introducing a fancy and highly customizable EditText, redesigned for codes input.**
 
 What you got:
 - chose the max length
-- any inputType
-- possibility to mask your input
-- use the character you want to mask the input
+- use it with any inputType
+- you can mask your input AND choose the character you want to mask it
 - customize the layout as you like
 - horizontal scroll with auto-focus while typing
 - and much more!
+
+![Demo 1](press/demo1.gif)
+![Demo 2](press/demo2.gif)
+
+![Demo 3](press/demo3.gif)
+![Demo 4](press/demo4.gif)
 
 - - -
 
@@ -77,6 +77,11 @@ cetMyCode.maxLength = 6
 
 If the input layout is too big for the screen, it will scrollable and will automatically focus on the portion of the code that the user is typing.
 
+To change the duration of the scrolling effect (in milliseconds):
+```kotlin
+cetMyCode.scrollDurationInMillis = 300
+```
+
 Do you need a particular inputType?
 ```kotlin
 cetMyCode.inputType = InputType.TYPE_CLASS_TEXT // choosing a password type will not mask the input
@@ -92,11 +97,23 @@ If you don't like dots:
 cetMyCode.codeMaskChar = '#' // or whatever other Char you like :)
 ```
 
+## Callbacks ##
+
+For your convenience, here's how you intercept the code:
+```kotlin
+cetMyCode.setOnCodeChangedListener { (code, completed) ->
+    // the code has changed
+    if (completed) {
+        // the code has been fully entered (code.length == maxLength)
+    }
+}
+```
+
 ## Design ##
 
-As an example, you can find a custom [**item_code_edit_text.xml**](/codeedittext/src/main/res/layout/item_code_edit_text.xml) inside the `res/layout` folder of `codeedittext-example` project.
+As an example, you can find a custom [**item_code_edit_text.xml**](/codeedittext-example/src/main/res/layout/item_code_edit_text.xml) inside the `res/layout` folder of `codeedittext-example` project.
 
-This is the layout of a single character and it's ENTIRELY CUSTOMIZABLE! You can modify it as you wish; just remember to keep the `TextView`'s id 😉
+This is the layout of a single character and it's ENTIRELY CUSTOMIZABLE! You can modify it as you wish; just remember to keep the `TextView`'s id unchanged 😉
 
 Just copy it to your `res/layout` folder and start to change dimensions, text's size, colors or even add more stuff... it's all up to you!
 
