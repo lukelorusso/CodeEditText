@@ -31,7 +31,7 @@
         android:background="@null"
         android:cursorVisible="false"
         android:digits="0123456789"
-        android:inputType="number|none"
+        android:inputType="numberPassword"
         android:textSize="0sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

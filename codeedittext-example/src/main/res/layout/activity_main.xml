@@ -23,6 +23,9 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="30.5dp"
-        app:cet_code_length="6" />
+        android:maxLength="6"
+        android:text="@string/partial_code"
+        app:cet_codeMaskChar="#"
+        app:cet_maskTheCode="true" />
 
 </LinearLayout>

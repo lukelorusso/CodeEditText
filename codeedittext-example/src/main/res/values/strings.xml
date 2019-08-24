@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">CodeEditText</string>
     <string name="title">Here\'s a CodeEditText:</string>
+    <string name="partial_code">1234</string>
 </resources>

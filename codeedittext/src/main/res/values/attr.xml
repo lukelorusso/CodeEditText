@@ -2,8 +2,11 @@
 <resources>
 
     <declare-styleable name="CodeEditText">
-        <attr name="cet_code_length" format="integer" />
-        <attr name="cet_code" format="string" />
+        <attr name="android:inputType" />
+        <attr name="android:maxLength" />
+        <attr name="android:text" />
+        <attr name="cet_maskTheCode" format="boolean" />
+        <attr name="cet_codeMaskChar" format="string" />
     </declare-styleable>
 
 </resources>

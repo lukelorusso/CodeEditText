@@ -1,3 +1,5 @@
+@file:Suppress("unused", "MemberVisibilityCanBePrivate")
+
 package com.lukelorusso.codeedittext
 
 import android.content.Context
@@ -18,22 +20,48 @@ class CodeEditText constructor(context: Context, attrs: AttributeSet) :
 
     companion object {
         private const val DEFAULT_CODE_LENGTH = 4
+        private const val DEFAULT_CODE_MASK_CHAR = '•'
     }
 
-    var codeLength: Int = DEFAULT_CODE_LENGTH
+    var codeMaskChar: Char = DEFAULT_CODE_MASK_CHAR
+        set(value) {
+            field = value
+            text = text
+        }
+
+    var inputType: Int
+        get() = editCodeReal.inputType
+        set(value) {
+            editCodeReal.inputType = value
+        }
+
+    var maskTheCode: Boolean = false
+        set(value) {
+            field = value
+            text = text
+        }
+
+    var maxLength: Int = DEFAULT_CODE_LENGTH
         set(value) {
             field = value
             if (initEnded) onAttachedToWindow()
         }
-    var code: String = ""
+
+    var text: Editable = "".toEditable()
         set(value) {
             field = value
             if (initEnded) renderCode()
             else rememberToRenderCode = true
         }
+
     private var onCodeChangedListener: ((Pair<String, Boolean>) -> Unit)? = null
-    private var initEnded = false // if true allows the view to be updated after setting an attribute programmatically
+    private var initEnded =
+        false // if true allows the view to be updated after setting an attribute programmatically
     private var rememberToRenderCode = false
+
+    fun setOnCodeChangedListener(listener: ((Pair<String, Boolean>) -> Unit)?) {
+        this.onCodeChangedListener = listener
+    }
 
     init {
         init(context, attrs)
@@ -44,15 +72,30 @@ class CodeEditText constructor(context: Context, attrs: AttributeSet) :
 
         val attributes = context.obtainStyledAttributes(attrs, R.styleable.CodeEditText, 0, 0)
         try {
-            codeLength = attributes.getInt(R.styleable.CodeEditText_cet_code_length, codeLength)
-            attributes.getString(R.styleable.CodeEditText_cet_code)?.also { code = it }
+            // codeMaskChar
+            attributes.getString(R.styleable.CodeEditText_cet_codeMaskChar)?.also {
+                codeMaskChar = it[0]
+            }
+
+            // inputType
+            if (attributes.hasValue(R.styleable.CodeEditText_android_inputType))
+                editCodeReal.inputType =
+                    attributes.getInt(R.styleable.CodeEditText_android_inputType, 0)
+
+            // maskTheCode
+            if (attributes.hasValue(R.styleable.CodeEditText_cet_maskTheCode)) maskTheCode =
+                attributes.getBoolean(R.styleable.CodeEditText_cet_maskTheCode, false)
+
+            // maxLength
+            maxLength = attributes.getInt(R.styleable.CodeEditText_android_maxLength, maxLength)
+
+            // text
+            attributes.getString(R.styleable.CodeEditText_android_text)
+                ?.also { text = it.toEditable() }
+
         } finally {
             attributes.recycle()
         }
-    }
-
-    fun setOnCodeChangedListener(listener: ((Pair<String, Boolean>) -> Unit)?) {
-        this.onCodeChangedListener = listener
     }
 
     override fun onAttachedToWindow() {
@@ -61,7 +104,7 @@ class CodeEditText constructor(context: Context, attrs: AttributeSet) :
 
         if (!isInEditMode) {
             llCodeWrapper.removeAllViews()
-            for (i in 0 until codeLength) {
+            for (i in 0 until maxLength) {
                 View.inflate(
                     context,
                     R.layout.item_code_edit_text,
@@ -69,7 +112,7 @@ class CodeEditText constructor(context: Context, attrs: AttributeSet) :
                 )
             }
 
-            editCodeReal.filters = arrayOf<InputFilter>(InputFilter.LengthFilter(codeLength))
+            editCodeReal.filters = arrayOf<InputFilter>(InputFilter.LengthFilter(maxLength))
             editCodeReal.removeTextChangedListener(textChangedListener)
             editCodeReal.addTextChangedListener(textChangedListener)
 
@@ -83,36 +126,25 @@ class CodeEditText constructor(context: Context, attrs: AttributeSet) :
     }
 
     private val textChangedListener = object : TextWatcher {
-        override fun beforeTextChanged(
-            s: CharSequence,
-            start: Int,
-            count: Int,
-            after: Int
-        ) {
-        }
+        override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
 
-        override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-            if (before > 0) {
-                // Remove last char
-                if (code.isNotEmpty()) {
-                    code = code.substring(0, code.length - 1)
-                }
-            } else if (code.length < codeLength && s.isNotEmpty()) {
-                val unicodeChar = s[s.length - 1]
-                code += unicodeChar
-            }
-        }
+        override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
 
-        override fun afterTextChanged(s: Editable) {}
+        override fun afterTextChanged(s: Editable) {
+            text = s
+        }
     }
 
     private fun renderCode() {
         for (i in 0 until llCodeWrapper.childCount) {
             val itemContainer = llCodeWrapper.getChildAt(i)
 
-            itemContainer.getTextView().text = if (code.length > i) code.getLetterAt(i) else ""
+            itemContainer.getTextView().text =
+                if (text.length > i)
+                    if (maskTheCode) codeMaskChar.toString() else text[i].toString()
+                else ""
 
-            if (i == code.length - 1 && !itemContainer.isFullyVisibleInside(hsvCodeWrapperScroller))
+            if (i == text.length - 1 && !itemContainer.isFullyVisibleInside(hsvCodeWrapperScroller))
                 hsvCodeWrapperScroller.focusOnView(itemContainer)
         }
         notifyCodeChanged()
@@ -136,11 +168,12 @@ class CodeEditText constructor(context: Context, attrs: AttributeSet) :
 
     private fun View.getTextView(): TextView = findViewById(R.id.tvCode)
 
-    private fun notifyCodeChanged(): Boolean = (code.length == codeLength).apply {
-        onCodeChangedListener?.invoke(Pair(code, this))
+    private fun notifyCodeChanged(): Boolean = (text.length == maxLength).apply {
+        onCodeChangedListener?.invoke(Pair(text.toString(), this))
     }
 
-    private fun String.getLetterAt(position: Int): String = this[position].toString()
+    private fun String.toEditable(): Editable =
+        Editable.Factory.getInstance().newEditable(this)
 
     private fun View.showKeyboard() {
         requestFocus()
