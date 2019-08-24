@@ -2,6 +2,7 @@
 
 package com.lukelorusso.codeedittext
 
+import android.animation.ObjectAnimator
 import android.content.Context
 import android.graphics.Rect
 import android.text.Editable
@@ -9,6 +10,7 @@ import android.text.InputFilter
 import android.text.TextWatcher
 import android.util.AttributeSet
 import android.view.View
+import android.view.animation.DecelerateInterpolator
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.FrameLayout
@@ -22,6 +24,7 @@ class CodeEditText constructor(context: Context, attrs: AttributeSet) :
     companion object {
         private const val DEFAULT_CODE_LENGTH = 4
         private const val DEFAULT_CODE_MASK_CHAR = '•'
+        private const val DEFAULT_SCROLL_DURATION_IN_MILLIS = 250
     }
 
     var codeMaskChar: Char = DEFAULT_CODE_MASK_CHAR
@@ -48,6 +51,8 @@ class CodeEditText constructor(context: Context, attrs: AttributeSet) :
             if (initEnded) onAttachedToWindow()
         }
 
+    var scrollDurationInMillis: Int = DEFAULT_SCROLL_DURATION_IN_MILLIS
+
     var text: Editable = "".toEditable()
         set(value) {
             field = value
@@ -59,6 +64,8 @@ class CodeEditText constructor(context: Context, attrs: AttributeSet) :
     private var initEnded =
         false // if true allows the view to be updated after setting an attribute programmatically
     private var rememberToRenderCode = false
+    private var xAnimator: ObjectAnimator? = null
+    private var yAnimator: ObjectAnimator? = null
 
     fun setOnCodeChangedListener(listener: ((Pair<String, Boolean>) -> Unit)?) {
         this.onCodeChangedListener = listener
@@ -89,6 +96,9 @@ class CodeEditText constructor(context: Context, attrs: AttributeSet) :
 
             // maxLength
             maxLength = attributes.getInt(R.styleable.CodeEditText_android_maxLength, maxLength)
+
+            // scrollDurationInMillis
+            scrollDurationInMillis = attributes.getInt(R.styleable.CodeEditText_cet_scrollDurationInMillis, scrollDurationInMillis)
 
             // text
             attributes.getString(R.styleable.CodeEditText_android_text)
@@ -178,8 +188,20 @@ class CodeEditText constructor(context: Context, attrs: AttributeSet) :
                 scrollBounds.bottom > bottom
     }
 
-    private fun View.focusOnView(childView: View) =
-        post { scrollTo(childView.left, childView.top) }
+    private fun View.focusOnView(childView: View) = post {
+        xAnimator?.cancel()
+        xAnimator = ObjectAnimator.ofInt(this, "scrollX", childView.left).apply {
+            interpolator = DecelerateInterpolator()
+            duration = scrollDurationInMillis.toLong()
+            start()
+        }
+        yAnimator?.cancel()
+        yAnimator = ObjectAnimator.ofInt(this, "scrollY", childView.top).apply {
+            interpolator = DecelerateInterpolator()
+            duration = scrollDurationInMillis.toLong()
+            start()
+        }
+    }
 
     private fun View.getTextView(): TextView = findViewById(R.id.tvCode)
 
