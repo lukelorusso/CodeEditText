@@ -63,7 +63,9 @@ All of them can be also set programmatically.
 
 - - -
 
-# Attributes #
+# Customization #
+
+## Attributes ##
 
 To set your code programmatically:
 ```kotlin
