@@ -25,10 +25,15 @@ class CodeEditText constructor(context: Context, attrs: AttributeSet) :
             field = value
             if (initEnded) onAttachedToWindow()
         }
-    private var code: String = ""
+    var code: String = ""
+        set(value) {
+            field = value
+            if (initEnded) renderCode()
+            else rememberToRenderCode = true
+        }
     private var onCodeChangedListener: ((Pair<String, Boolean>) -> Unit)? = null
-    private var initEnded =
-        false // if true allows the view to be updated after setting an attribute programmatically
+    private var initEnded = false // if true allows the view to be updated after setting an attribute programmatically
+    private var rememberToRenderCode = false
 
     init {
         init(context, attrs)
@@ -40,11 +45,10 @@ class CodeEditText constructor(context: Context, attrs: AttributeSet) :
         val attributes = context.obtainStyledAttributes(attrs, R.styleable.CodeEditText, 0, 0)
         try {
             codeLength = attributes.getInt(R.styleable.CodeEditText_cet_code_length, codeLength)
+            attributes.getString(R.styleable.CodeEditText_cet_code)?.also { code = it }
         } finally {
             attributes.recycle()
         }
-
-        initEnded = true
     }
 
     fun setOnCodeChangedListener(listener: ((Pair<String, Boolean>) -> Unit)?) {
@@ -53,6 +57,8 @@ class CodeEditText constructor(context: Context, attrs: AttributeSet) :
 
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
+        initEnded = true
+
         if (!isInEditMode) {
             llCodeWrapper.removeAllViews()
             for (i in 0 until codeLength) {
@@ -68,6 +74,11 @@ class CodeEditText constructor(context: Context, attrs: AttributeSet) :
             editCodeReal.addTextChangedListener(textChangedListener)
 
             llCodeWrapper.setOnClickListener { editCodeReal.showKeyboard() }
+        }
+
+        if (rememberToRenderCode) {
+            rememberToRenderCode = false
+            post { renderCode() }
         }
     }
 
@@ -90,15 +101,12 @@ class CodeEditText constructor(context: Context, attrs: AttributeSet) :
                 val unicodeChar = s[s.length - 1]
                 code += unicodeChar
             }
-
-            showCode()
-            notifyCodeChanged()
         }
 
         override fun afterTextChanged(s: Editable) {}
     }
 
-    private fun showCode() {
+    private fun renderCode() {
         for (i in 0 until llCodeWrapper.childCount) {
             val itemContainer = llCodeWrapper.getChildAt(i)
 
@@ -107,6 +115,7 @@ class CodeEditText constructor(context: Context, attrs: AttributeSet) :
             if (i == code.length - 1 && !itemContainer.isFullyVisibleInside(hsvCodeWrapperScroller))
                 hsvCodeWrapperScroller.focusOnView(itemContainer)
         }
+        notifyCodeChanged()
     }
 
     private fun View.isFullyVisibleInside(parentView: View): Boolean {

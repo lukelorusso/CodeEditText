@@ -16,6 +16,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         //cetMyCode.codeLength = 6
+        //cetMyCode.code = "4651"
         cetMyCode.setOnCodeChangedListener { (code, completed) ->
             Log.d("CodeEditText", code)
             if (completed) hideKeyboard()

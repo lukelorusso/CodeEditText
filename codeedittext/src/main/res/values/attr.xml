@@ -3,6 +3,7 @@
 
     <declare-styleable name="CodeEditText">
         <attr name="cet_code_length" format="integer" />
+        <attr name="cet_code" format="string" />
     </declare-styleable>
 
 </resources>
