@@ -1,6 +1,7 @@
 package com.lukelorusso.codeedittext
 
 import android.content.Context
+import android.graphics.Rect
 import android.text.Editable
 import android.text.InputFilter
 import android.text.TextWatcher
@@ -99,13 +100,30 @@ class CodeEditText constructor(context: Context, attrs: AttributeSet) :
 
     private fun showCode() {
         for (i in 0 until llCodeWrapper.childCount) {
-            llCodeWrapper.getChildAt(i).getTextView().text =
-                if (code.length > i)
-                    code.getLetterAt(i)
-                else
-                    ""
+            val itemContainer = llCodeWrapper.getChildAt(i)
+
+            itemContainer.getTextView().text = if (code.length > i) code.getLetterAt(i) else ""
+
+            if (i == code.length - 1 && !itemContainer.isFullyVisibleInside(hsvCodeWrapperScroller))
+                hsvCodeWrapperScroller.focusOnView(itemContainer)
         }
     }
+
+    private fun View.isFullyVisibleInside(parentView: View): Boolean {
+        val scrollBounds = Rect()
+        parentView.getDrawingRect(scrollBounds)
+        val left = this.x
+        val right = left + this.width
+        val top = this.y
+        val bottom = top + this.height
+        return scrollBounds.left < left &&
+                scrollBounds.right > right &&
+                scrollBounds.top < top &&
+                scrollBounds.bottom > bottom
+    }
+
+    private fun View.focusOnView(childView: View) =
+        post { scrollTo(childView.left, childView.top) }
 
     private fun View.getTextView(): TextView = findViewById(R.id.tvCode)
 
@@ -118,7 +136,7 @@ class CodeEditText constructor(context: Context, attrs: AttributeSet) :
     private fun View.showKeyboard() {
         requestFocus()
         (context.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager)?.also {
-            it.showSoftInput(this, InputMethodManager.SHOW_FORCED)
+            it.showSoftInput(this, InputMethodManager.HIDE_IMPLICIT_ONLY)
         }
     }
 

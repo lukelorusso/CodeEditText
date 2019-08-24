@@ -3,13 +3,21 @@
     android:layout_width="42dp"
     android:layout_height="59dp"
     android:layout_margin="3.5dp"
-    android:background="@android:color/darker_gray">
+    android:background="@drawable/shape_code_edit_text">
 
+    <!-- My custom TextView -->
     <TextView
         android:id="@+id/tvCode"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:textSize="45sp" />
+
+    <!-- Eventual other view to beautify the layout -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_gravity="bottom"
+        android:background="@color/code_edit_text_bottom_line" />
 
 </FrameLayout>
