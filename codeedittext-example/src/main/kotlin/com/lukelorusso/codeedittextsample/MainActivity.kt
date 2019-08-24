@@ -21,7 +21,7 @@ class MainActivity : AppCompatActivity() {
         //cetMyCode.maskTheCode = true
         //cetMyCode.codeMaskChar = '#'
         cetMyCode.setOnCodeChangedListener { (code, completed) ->
-            Log.d("CodeEditText", code)
+            Log.d("CodeEditText", "text: \"$code\"")
             if (completed) hideKeyboard()
         }
     }

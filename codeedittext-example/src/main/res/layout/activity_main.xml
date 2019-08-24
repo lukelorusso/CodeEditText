@@ -23,9 +23,10 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="30.5dp"
+        android:inputType="number"
         android:maxLength="6"
         android:text="@string/partial_code"
         app:cet_codeMaskChar="#"
-        app:cet_maskTheCode="true" />
+        app:cet_maskTheCode="false" />
 
 </LinearLayout>

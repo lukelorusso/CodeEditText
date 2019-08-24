@@ -10,6 +10,7 @@ import android.text.TextWatcher
 import android.util.AttributeSet
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import android.widget.EditText
 import android.widget.FrameLayout
 import android.widget.TextView
 import kotlinx.android.synthetic.main.layout_code_edit_text.view.*
@@ -112,11 +113,17 @@ class CodeEditText constructor(context: Context, attrs: AttributeSet) :
                 )
             }
 
+            if (text.isNotEmpty()) editCodeReal.text = text
             editCodeReal.filters = arrayOf<InputFilter>(InputFilter.LengthFilter(maxLength))
             editCodeReal.removeTextChangedListener(textChangedListener)
             editCodeReal.addTextChangedListener(textChangedListener)
 
-            llCodeWrapper.setOnClickListener { editCodeReal.showKeyboard() }
+            llCodeWrapper.setOnClickListener {
+                editCodeReal.apply {
+                    showKeyboard()
+                    focusOnLastLetter()
+                }
+            }
         }
 
         if (rememberToRenderCode) {
@@ -150,6 +157,14 @@ class CodeEditText constructor(context: Context, attrs: AttributeSet) :
         notifyCodeChanged()
     }
 
+    private fun notifyCodeChanged(): Boolean = (text.length == maxLength).apply {
+        onCodeChangedListener?.invoke(Pair(text.toString(), this))
+    }
+
+    fun EditText.focusOnLastLetter() {
+        setSelection(text.length)
+    }
+
     private fun View.isFullyVisibleInside(parentView: View): Boolean {
         val scrollBounds = Rect()
         parentView.getDrawingRect(scrollBounds)
@@ -167,10 +182,6 @@ class CodeEditText constructor(context: Context, attrs: AttributeSet) :
         post { scrollTo(childView.left, childView.top) }
 
     private fun View.getTextView(): TextView = findViewById(R.id.tvCode)
-
-    private fun notifyCodeChanged(): Boolean = (text.length == maxLength).apply {
-        onCodeChangedListener?.invoke(Pair(text.toString(), this))
-    }
 
     private fun String.toEditable(): Editable =
         Editable.Factory.getInstance().newEditable(this)
