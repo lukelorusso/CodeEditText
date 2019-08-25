@@ -98,7 +98,10 @@ class CodeEditText constructor(context: Context, attrs: AttributeSet) :
             maxLength = attributes.getInt(R.styleable.CodeEditText_android_maxLength, maxLength)
 
             // scrollDurationInMillis
-            scrollDurationInMillis = attributes.getInt(R.styleable.CodeEditText_cet_scrollDurationInMillis, scrollDurationInMillis)
+            scrollDurationInMillis = attributes.getInt(
+                R.styleable.CodeEditText_cet_scrollDurationInMillis,
+                scrollDurationInMillis
+            )
 
             // text
             attributes.getString(R.styleable.CodeEditText_android_text)
@@ -158,7 +161,8 @@ class CodeEditText constructor(context: Context, attrs: AttributeSet) :
 
             itemContainer.getTextView().text =
                 if (text.length > i)
-                    if (maskTheCode) codeMaskChar.toString() else text[i].toString()
+                    (if (maskTheCode) codeMaskChar else text[i])
+                        .toString()
                 else ""
 
             if (i == text.length - 1 && !itemContainer.isFullyVisibleInside(hsvCodeWrapperScroller))
@@ -171,7 +175,7 @@ class CodeEditText constructor(context: Context, attrs: AttributeSet) :
         onCodeChangedListener?.invoke(Pair(text.toString(), this))
     }
 
-    fun EditText.focusOnLastLetter() {
+    private fun EditText.focusOnLastLetter() {
         setSelection(text.length)
     }
 
