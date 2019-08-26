@@ -4,6 +4,16 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
 
+    <EditText
+        android:id="@+id/editCodeReal"
+        android:layout_width="1dp"
+        android:layout_height="1dp"
+        android:background="@null"
+        android:cursorVisible="false"
+        android:inputType="number"
+        android:textSize="0sp"
+        tools:ignore="Autofill,LabelFor,TextFields" />
+
     <HorizontalScrollView
         android:id="@+id/hsvCodeWrapperScroller"
         android:layout_width="match_parent"
@@ -19,16 +29,5 @@
             android:orientation="horizontal" />
 
     </HorizontalScrollView>
-
-    <EditText
-        android:id="@+id/editCodeReal"
-        android:layout_width="1dp"
-        android:layout_height="1dp"
-        android:background="@null"
-        android:cursorVisible="false"
-        android:digits="0123456789"
-        android:inputType="numberPassword"
-        android:textSize="0sp"
-        tools:ignore="Autofill,LabelFor,TextFields" />
 
 </FrameLayout>

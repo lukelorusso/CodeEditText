@@ -84,7 +84,7 @@ To change the duration of the scrolling effect (in milliseconds):
 cetMyCode.scrollDurationInMillis = 300
 ```
 
-Do you need a particular inputType?
+The default inputType for the EditText is `"number"`. Do you need a particular one?
 ```kotlin
 cetMyCode.inputType = InputType.TYPE_CLASS_TEXT // choosing a password type will not mask the input
 ```
@@ -130,3 +130,4 @@ Feel free to checkout and launch the example app 🎡
 # Copyright #
 
 Make with 💚 by [Luca Lorusso](http://lukelorusso.com), licensed under [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0)
+Thanks for the help to [Lopez Mikhael](http://mikhaellopez.com/)
