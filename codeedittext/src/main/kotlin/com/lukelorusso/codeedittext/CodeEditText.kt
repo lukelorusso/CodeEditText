@@ -159,7 +159,7 @@ class CodeEditText constructor(context: Context, attrs: AttributeSet) :
         for (i in 0 until llCodeWrapper.childCount) {
             val itemContainer = llCodeWrapper.getChildAt(i)
 
-            itemContainer.getTextView().text =
+            itemContainer.findViewById<TextView>(R.id.tvCode).text =
                 if (text.length > i)
                     (if (maskTheCode) codeMaskChar else text[i])
                         .toString()
@@ -173,10 +173,6 @@ class CodeEditText constructor(context: Context, attrs: AttributeSet) :
 
     private fun notifyCodeChanged(): Boolean = (text.length == maxLength).apply {
         onCodeChangedListener?.invoke(Pair(text.toString(), this))
-    }
-
-    private fun EditText.focusOnLastLetter() {
-        setSelection(text.length)
     }
 
     private fun View.isFullyVisibleInside(parentView: View): Boolean {
@@ -219,16 +215,16 @@ class CodeEditText constructor(context: Context, attrs: AttributeSet) :
         }
     }
 
-    private fun View.getTextView(): TextView = findViewById(R.id.tvCode)
-
-    private fun String.toEditable(): Editable =
-        Editable.Factory.getInstance().newEditable(this)
-
     private fun View.showKeyboard() {
         requestFocus()
         (context.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager)?.also {
             it.showSoftInput(this, InputMethodManager.HIDE_IMPLICIT_ONLY)
         }
     }
+
+    private fun EditText.focusOnLastLetter() = setSelection(text.length)
+
+    private fun String.toEditable(): Editable =
+        Editable.Factory.getInstance().newEditable(this)
 
 }
