@@ -193,14 +193,26 @@ class CodeEditText constructor(context: Context, attrs: AttributeSet) :
     }
 
     private fun View.focusOnView(childView: View) = post {
+        var top = childView.top
+        var left = childView.left
+        var parent = (childView.parent as View)
+        while (parent != this) {
+            top += parent.top
+            left += parent.left
+            parent = parent.parent as View
+        }
+
+        val scrollX = left - this.width / 2 + childView.width / 2
         xAnimator?.cancel()
-        xAnimator = ObjectAnimator.ofInt(this, "scrollX", childView.left).apply {
+        xAnimator = ObjectAnimator.ofInt(this, "scrollX", scrollX).apply {
             interpolator = DecelerateInterpolator()
             duration = scrollDurationInMillis.toLong()
             start()
         }
+
+        val scrollY = top - this.height / 2 + childView.height / 2
         yAnimator?.cancel()
-        yAnimator = ObjectAnimator.ofInt(this, "scrollY", childView.top).apply {
+        yAnimator = ObjectAnimator.ofInt(this, "scrollY", scrollY).apply {
             interpolator = DecelerateInterpolator()
             duration = scrollDurationInMillis.toLong()
             start()
