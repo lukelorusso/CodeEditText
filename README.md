@@ -129,5 +129,5 @@ Feel free to checkout and launch the example app 🎡
 
 # Copyright #
 
-Make with 💚 by [Luca Lorusso](http://lukelorusso.com), licensed under [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0)
+Make with 💚 by [Luca Lorusso](http://lukelorusso.com), licensed under [Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0)  
 Thanks for the help to [Lopez Mikhael](http://mikhaellopez.com/)
