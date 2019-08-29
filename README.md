@@ -77,14 +77,14 @@ cetMyCode.text = "1234"
 cetMyCode.maxLength = 6
 ```
 
-If the input layout is too big for the screen, it will scrollable and will automatically focus on the portion of the code that the user is typing.
+If the input layout is too big for the screen, it will become scrollable and will automatically focus on the portion of the code where the user is typing.
 
 To change the duration of the scrolling effect (in milliseconds):
 ```kotlin
 cetMyCode.scrollDurationInMillis = 300
 ```
 
-The default inputType for the EditText is `"number"`. Do you need a particular one?
+The default inputType for the EditText is `"number"`. Do you need another one?
 ```kotlin
 cetMyCode.inputType = InputType.TYPE_CLASS_TEXT // choosing a password type will not mask the input
 ```
