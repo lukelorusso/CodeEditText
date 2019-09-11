@@ -7,6 +7,8 @@ CodeEditText
 
 This is the source code of an Android library: `-=:[ CodeEditText ]:=-`
 
+📃 Check also the [**Medium article**](https://blog.prototypr.io/android-codeedittext-a-custom-edittext-tailor-made-for-code-and-password-input-27719cfe28e6?source=friends_link&sk=611e21eba68ff9d095b5e2aad1a6535e) about it!
+
 - - -
 
 ## Why would you need it? ##
