@@ -24,10 +24,17 @@ class CodeEditText constructor(context: Context, attrs: AttributeSet) :
     companion object {
         private const val DEFAULT_CODE_LENGTH = 4
         private const val DEFAULT_CODE_MASK_CHAR = '•'
+        private const val DEFAULT_CODE_PLACEHOLDER = ' '
         private const val DEFAULT_SCROLL_DURATION_IN_MILLIS = 250
     }
 
     var codeMaskChar: Char = DEFAULT_CODE_MASK_CHAR
+        set(value) {
+            field = value
+            text = text
+        }
+
+    var codePlaceholder: Char = DEFAULT_CODE_PLACEHOLDER
         set(value) {
             field = value
             text = text
@@ -83,6 +90,11 @@ class CodeEditText constructor(context: Context, attrs: AttributeSet) :
             // codeMaskChar
             attributes.getString(R.styleable.CodeEditText_cet_codeMaskChar)?.also {
                 codeMaskChar = it[0]
+            }
+
+            // codePlaceholder
+            attributes.getString(R.styleable.CodeEditText_cet_codePlaceholder)?.also {
+                codePlaceholder = it[0]
             }
 
             // inputType
@@ -161,9 +173,8 @@ class CodeEditText constructor(context: Context, attrs: AttributeSet) :
 
             itemContainer.findViewById<TextView>(R.id.tvCode).text =
                 if (text.length > i)
-                    (if (maskTheCode) codeMaskChar else text[i])
-                        .toString()
-                else ""
+                    (if (maskTheCode) codeMaskChar else text[i]).toString()
+                else codePlaceholder.toString()
 
             if (i == text.length - 1 && !itemContainer.isFullyVisibleInside(hsvCodeWrapperScroller))
                 hsvCodeWrapperScroller.focusOnView(itemContainer)

@@ -5,8 +5,9 @@
         <attr name="android:inputType" />
         <attr name="android:maxLength" />
         <attr name="android:text" />
-        <attr name="cet_maskTheCode" format="boolean" />
         <attr name="cet_codeMaskChar" format="string" />
+        <attr name="cet_codePlaceholder" format="string" />
+        <attr name="cet_maskTheCode" format="boolean" />
         <attr name="cet_scrollDurationInMillis" format="integer" />
     </declare-styleable>
 

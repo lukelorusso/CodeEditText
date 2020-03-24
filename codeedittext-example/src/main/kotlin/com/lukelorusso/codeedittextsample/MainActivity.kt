@@ -18,8 +18,9 @@ class MainActivity : AppCompatActivity() {
         //cetMyCode.maxLength = 6
         //cetMyCode.text = "1234"
         //cetMyCode.inputType = InputType.TYPE_CLASS_TEXT
-        //cetMyCode.maskTheCode = true
         //cetMyCode.codeMaskChar = '#'
+        //cetMyCode.codePlaceholder = '-'
+        //cetMyCode.maskTheCode = true
         //cetMyCode.scrollDurationInMillis = 300
         cetMyCode.setOnCodeChangedListener { (code, completed) ->
             Log.d("CodeEditText", "text: \"$code\"")
