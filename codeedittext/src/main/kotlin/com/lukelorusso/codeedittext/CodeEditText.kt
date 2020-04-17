@@ -60,7 +60,7 @@ class CodeEditText constructor(context: Context, attrs: AttributeSet) :
 
     var scrollDurationInMillis: Int = DEFAULT_SCROLL_DURATION_IN_MILLIS
 
-    var text: Editable = "".toEditable()
+    private var text: Editable = "".toEditable()
         set(value) {
             field = value
             if (initEnded) renderCode()
@@ -77,6 +77,15 @@ class CodeEditText constructor(context: Context, attrs: AttributeSet) :
     fun setOnCodeChangedListener(listener: ((Pair<String, Boolean>) -> Unit)?) {
         this.onCodeChangedListener = listener
     }
+
+    fun setText(value: CharSequence) {
+        val cropped = if (value.length > maxLength) value.subSequence(0, maxLength)
+        else value
+        editCodeReal.setText(cropped)
+        this.text = cropped.toEditable()
+    }
+
+    fun getText(): CharSequence = this.text
 
     init {
         init(context, attrs)
@@ -116,8 +125,11 @@ class CodeEditText constructor(context: Context, attrs: AttributeSet) :
             )
 
             // text
-            attributes.getString(R.styleable.CodeEditText_android_text)
-                ?.also { text = it.toEditable() }
+            attributes.getString(R.styleable.CodeEditText_android_text)?.also { value ->
+                val cropped = if (value.length > maxLength) value.subSequence(0, maxLength)
+                else text
+                text = cropped.toEditable()
+            }
 
         } finally {
             attributes.recycle()
@@ -235,7 +247,7 @@ class CodeEditText constructor(context: Context, attrs: AttributeSet) :
 
     private fun EditText.focusOnLastLetter() = setSelection(text.length)
 
-    private fun String.toEditable(): Editable =
+    private fun CharSequence.toEditable(): Editable =
         Editable.Factory.getInstance().newEditable(this)
 
 }

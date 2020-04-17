@@ -16,7 +16,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         //cetMyCode.maxLength = 6
-        //cetMyCode.text = "1234"
+        //cetMyCode.setText("1234")
         //cetMyCode.inputType = InputType.TYPE_CLASS_TEXT
         //cetMyCode.codeMaskChar = '#'
         //cetMyCode.codePlaceholder = '-'

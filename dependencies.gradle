@@ -8,8 +8,8 @@ allprojects {
 ext {
 
     // APP VERSION
-    androidVersionCode          = 1
-    androidVersionName          = '1.0.2' // REMEMBER: also update README.md (all instances)
+    androidVersionCode          = 2
+    androidVersionName          = '1.0.3' // REMEMBER: also update README.md (all instances)
 
     // ANDROID VERSION
     androidCompileSdkVersion    = 28
@@ -20,7 +20,7 @@ ext {
     kotlinStdlib                = "org.jetbrains.kotlin:kotlin-stdlib:${ext.kotlin_version}"
 
     // ANDROID LIB
-    androidAppCompatXVersion    = '1.1.0'
-    androidXAppCompat           = "androidx.appcompat:appcompat:$androidAppCompatXVersion"
+    androidXVersion             = '1.1.0'
+    androidXAppCompat           = "androidx.appcompat:appcompat:$androidXVersion"
 
 }
