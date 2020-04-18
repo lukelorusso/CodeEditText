@@ -31,13 +31,13 @@ class CodeEditText constructor(context: Context, attrs: AttributeSet) :
     var codeMaskChar: Char = DEFAULT_CODE_MASK_CHAR
         set(value) {
             field = value
-            text = text
+            editable = editable
         }
 
     var codePlaceholder: Char = DEFAULT_CODE_PLACEHOLDER
         set(value) {
             field = value
-            text = text
+            editable = editable
         }
 
     var inputType: Int
@@ -49,7 +49,7 @@ class CodeEditText constructor(context: Context, attrs: AttributeSet) :
     var maskTheCode: Boolean = false
         set(value) {
             field = value
-            text = text
+            editable = editable
         }
 
     var maxLength: Int = DEFAULT_CODE_LENGTH
@@ -60,32 +60,31 @@ class CodeEditText constructor(context: Context, attrs: AttributeSet) :
 
     var scrollDurationInMillis: Int = DEFAULT_SCROLL_DURATION_IN_MILLIS
 
-    private var text: Editable = "".toEditable()
-        set(value) {
-            field = value
-            if (initEnded) renderCode()
-            else rememberToRenderCode = true
-        }
-
     private var onCodeChangedListener: ((Pair<String, Boolean>) -> Unit)? = null
     private var initEnded =
         false // if true allows the view to be updated after setting an attribute programmatically
     private var rememberToRenderCode = false
     private var xAnimator: ObjectAnimator? = null
     private var yAnimator: ObjectAnimator? = null
+    private var editable: Editable = "".toEditable()
+        set(value) {
+            field = value
+            if (initEnded) renderCode()
+            else rememberToRenderCode = true
+        }
 
     fun setOnCodeChangedListener(listener: ((Pair<String, Boolean>) -> Unit)?) {
         this.onCodeChangedListener = listener
     }
 
-    fun setText(value: CharSequence) {
-        val cropped = if (value.length > maxLength) value.subSequence(0, maxLength)
-        else value
-        editCodeReal.setText(cropped)
-        this.text = cropped.toEditable()
-    }
-
-    fun getText(): CharSequence = this.text
+    var text: CharSequence
+        get() = this.editable
+        set(value) {
+            val cropped = if (value.length > maxLength) value.subSequence(0, maxLength)
+            else value
+            editCodeReal.setText(cropped)
+            this.editable = cropped.toEditable()
+        }
 
     init {
         init(context, attrs)
@@ -127,8 +126,8 @@ class CodeEditText constructor(context: Context, attrs: AttributeSet) :
             // text
             attributes.getString(R.styleable.CodeEditText_android_text)?.also { value ->
                 val cropped = if (value.length > maxLength) value.subSequence(0, maxLength)
-                else text
-                text = cropped.toEditable()
+                else editable
+                editable = cropped.toEditable()
             }
 
         } finally {
@@ -150,7 +149,7 @@ class CodeEditText constructor(context: Context, attrs: AttributeSet) :
                 )
             }
 
-            if (text.isNotEmpty()) editCodeReal.text = text
+            if (editable.isNotEmpty()) editCodeReal.text = editable
             editCodeReal.filters = arrayOf<InputFilter>(InputFilter.LengthFilter(maxLength))
             editCodeReal.removeTextChangedListener(textChangedListener)
             editCodeReal.addTextChangedListener(textChangedListener)
@@ -175,7 +174,7 @@ class CodeEditText constructor(context: Context, attrs: AttributeSet) :
         override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
 
         override fun afterTextChanged(s: Editable) {
-            text = s
+            editable = s
         }
     }
 
@@ -184,18 +183,21 @@ class CodeEditText constructor(context: Context, attrs: AttributeSet) :
             val itemContainer = llCodeWrapper.getChildAt(i)
 
             itemContainer.findViewById<TextView>(R.id.tvCode).text =
-                if (text.length > i)
-                    (if (maskTheCode) codeMaskChar else text[i]).toString()
+                if (editable.length > i)
+                    (if (maskTheCode) codeMaskChar else editable[i]).toString()
                 else codePlaceholder.toString()
 
-            if (i == text.length - 1 && !itemContainer.isFullyVisibleInside(hsvCodeWrapperScroller))
+            if (i == editable.length - 1 && !itemContainer.isFullyVisibleInside(
+                    hsvCodeWrapperScroller
+                )
+            )
                 hsvCodeWrapperScroller.focusOnView(itemContainer)
         }
         notifyCodeChanged()
     }
 
-    private fun notifyCodeChanged(): Boolean = (text.length == maxLength).apply {
-        onCodeChangedListener?.invoke(Pair(text.toString(), this))
+    private fun notifyCodeChanged(): Boolean = (editable.length == maxLength).apply {
+        onCodeChangedListener?.invoke(Pair(editable.toString(), this))
     }
 
     private fun View.isFullyVisibleInside(parentView: View): Boolean {

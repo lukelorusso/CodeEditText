@@ -1,7 +1,7 @@
 CodeEditText
 ===============
 
-[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0) [![Platform](https://img.shields.io/badge/platform-android-green.svg)](http://developer.android.com/index.html) [![API](https://img.shields.io/badge/API-16%2B-brightgreen.svg?style=flat)](https://android-arsenal.com/api?level=16) [![Download](https://api.bintray.com/packages/lukelorusso/maven/com.lukelorusso:codeedittext/images/download.svg?version=1.0.3) ](https://bintray.com/lukelorusso/maven/com.lukelorusso:codeedittext/1.0.3/link)
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0) [![Platform](https://img.shields.io/badge/platform-android-green.svg)](http://developer.android.com/index.html) [![API](https://img.shields.io/badge/API-16%2B-brightgreen.svg?style=flat)](https://android-arsenal.com/api?level=16) [![Download](https://api.bintray.com/packages/lukelorusso/maven/com.lukelorusso:codeedittext/images/download.svg?version=1.0.4) ](https://bintray.com/lukelorusso/maven/com.lukelorusso:codeedittext/1.0.4/link)
 
 ## Presentation ##
 
@@ -38,7 +38,7 @@ What you got:
 Make sure to include the library in your app's build.gradle:
 
 ```groovy
-    implementation 'com.lukelorusso:codeedittext:1.0.3'
+    implementation 'com.lukelorusso:codeedittext:1.0.4'
 ```  
 
 Add the view to your layout:
@@ -72,7 +72,7 @@ All of them can be also set programmatically.
 
 To set your code programmatically:
 ```kotlin
-cetMyCode.setText("1234")
+cetMyCode.text = "1234"
 ```
 
 ...and the same thing for the maxLength:

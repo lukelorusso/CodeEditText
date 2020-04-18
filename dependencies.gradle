@@ -9,7 +9,7 @@ ext {
 
     // APP VERSION
     androidVersionCode          = 2
-    androidVersionName          = '1.0.3' // REMEMBER: also update README.md (all instances)
+    androidVersionName          = '1.0.4' // REMEMBER: also update README.md (all instances)
 
     // ANDROID VERSION
     androidCompileSdkVersion    = 28
