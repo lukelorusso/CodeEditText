@@ -82,8 +82,8 @@ class CodeEditText constructor(context: Context, attrs: AttributeSet) :
         set(value) {
             val cropped = if (value.length > maxLength) value.subSequence(0, maxLength)
             else value
-            editCodeReal.setText(cropped)
             this.editable = cropped.toEditable()
+            editCodeReal.setText(cropped)
         }
 
     init {
@@ -126,8 +126,8 @@ class CodeEditText constructor(context: Context, attrs: AttributeSet) :
             // text
             attributes.getString(R.styleable.CodeEditText_android_text)?.also { value ->
                 val cropped = if (value.length > maxLength) value.subSequence(0, maxLength)
-                else editable
-                editable = cropped.toEditable()
+                else value
+                this.editable = cropped.toEditable()
             }
 
         } finally {
