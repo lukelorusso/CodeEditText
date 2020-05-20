@@ -64,6 +64,20 @@ maybe add some attributes... here you got some, we'll discuss them later
 
 All of them can be also set programmatically.
 
+## For Java projects ##
+
+Someone experienced this `InflateException`. For those guys, it's worth noticing that this is a KOTLIN library! The reason why you're getting an `InvocationTargetException` is because, in case you're still on Java, you also have to specify:
+
+```gradle
+implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.3.+'
+// or one of the -jre7, -jre8 stdlib depending on your config
+// put the most up-to-date version
+```
+
+on your app module's `build.gradle`.
+
+Another solution is just to... migrate to Kotlin guys!
+
 - - -
 
 # Customization #
