@@ -8,19 +8,21 @@ allprojects {
 ext {
 
     // APP VERSION
-    androidVersionCode          = 2
-    androidVersionName          = '1.0.5' // REMEMBER: also update README.md (all instances)
+    androidVersionCode          = 7
+    androidVersionName          = '1.0.6' // REMEMBER: also update README.md (all instances)
 
     // ANDROID VERSION
-    androidCompileSdkVersion    = 28
     androidMinSdkVersion        = 16
-    androidTargetSdkVersion     = 28
+    androidTargetSdkVersion     = 29
 
     // KOTLIN
-    kotlinStdlib                = "org.jetbrains.kotlin:kotlin-stdlib:${ext.kotlin_version}"
+    kotlinStdlibGroupId         = "org.jetbrains.kotlin"
+    kotlinStdlibArtifactId      = "kotlin-stdlib"
+    kotlinStdlibVersion         = ext.kotlin_version
+    kotlinStdlib                = "$kotlinStdlibGroupId:$kotlinStdlibArtifactId:$kotlinStdlibVersion"
 
     // ANDROID LIB
-    androidXVersion             = '1.1.0'
+    androidXVersion             = '1.2.0'
     androidXAppCompat           = "androidx.appcompat:appcompat:$androidXVersion"
 
 }
