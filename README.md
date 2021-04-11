@@ -38,18 +38,18 @@ What you got:
 Step 1. add the JitPack repository to your ROOT build.gradle at the end of repositories:
 
 ```groovy
-	allprojects {
-		repositories {
-			...
-			maven { url 'https://jitpack.io' }
-		}
-	}
+allprojects {
+    repositories {
+        ...
+        maven { url 'https://jitpack.io' }
+    }
+}
 ```
 
 Step 2. add the dependency:
 
 ```groovy
-    implementation 'com.lukelorusso:codeedittext:1.1.0'
+    implementation 'com.github.lukelorusso:CodeEditText:1.1.0'
 ```  
 
 That's it!
