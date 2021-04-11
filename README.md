@@ -1,7 +1,7 @@
 CodeEditText
 ===============
 
-[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0) [![Platform](https://img.shields.io/badge/platform-android-green.svg)](http://developer.android.com/index.html) [![API](https://img.shields.io/badge/API-16%2B-brightgreen.svg?style=flat)](https://android-arsenal.com/api?level=16) [![Download](https://api.bintray.com/packages/lukelorusso/maven/com.lukelorusso:codeedittext/images/download.svg?version=1.0.6) ](https://bintray.com/lukelorusso/maven/com.lukelorusso:codeedittext/1.0.6/link)
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0) [![Platform](https://img.shields.io/badge/platform-android-green.svg)](http://developer.android.com/index.html) [![API](https://img.shields.io/badge/API-16%2B-brightgreen.svg?style=flat)](https://android-arsenal.com/api?level=16) [![Download](https://badge.fury.io/gh/lukelorusso%2FCodeEditText.svg)](https://github.com/lukelorusso/CodeEditText/releases/)
 
 ## Presentation ##
 
@@ -35,13 +35,26 @@ What you got:
 
 ## How to use it? ##
 
-Make sure to include the library in your app's build.gradle:
+Step 1. add the JitPack repository to your ROOT build.gradle at the end of repositories:
 
 ```groovy
-    implementation 'com.lukelorusso:codeedittext:1.0.6'
+	allprojects {
+		repositories {
+			...
+			maven { url 'https://jitpack.io' }
+		}
+	}
+```
+
+Step 2. add the dependency:
+
+```groovy
+    implementation 'com.lukelorusso:codeedittext:1.1.0'
 ```  
 
-Add the view to your layout:
+That's it!
+
+Now you can add the view to your layout:
 ```xml
 <com.lukelorusso.codeedittext.CodeEditText
         android:id="@+id/cetMyCode"

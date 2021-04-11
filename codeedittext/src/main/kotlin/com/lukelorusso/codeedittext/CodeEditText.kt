@@ -9,13 +9,14 @@ import android.text.Editable
 import android.text.InputFilter
 import android.text.TextWatcher
 import android.util.AttributeSet
+import android.view.LayoutInflater
 import android.view.View
 import android.view.animation.DecelerateInterpolator
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.FrameLayout
 import android.widget.TextView
-import kotlinx.android.synthetic.main.layout_code_edit_text.view.*
+import com.lukelorusso.codeedittext.databinding.LayoutCodeEditTextBinding
 
 
 class CodeEditText constructor(context: Context, attrs: AttributeSet) :
@@ -27,6 +28,9 @@ class CodeEditText constructor(context: Context, attrs: AttributeSet) :
         private const val DEFAULT_CODE_PLACEHOLDER = ' '
         private const val DEFAULT_SCROLL_DURATION_IN_MILLIS = 250
     }
+
+    private var binding: LayoutCodeEditTextBinding =
+        LayoutCodeEditTextBinding.inflate(LayoutInflater.from(context), this, true)
 
     var codeMaskChar: Char = DEFAULT_CODE_MASK_CHAR
         set(value) {
@@ -41,9 +45,9 @@ class CodeEditText constructor(context: Context, attrs: AttributeSet) :
         }
 
     var inputType: Int
-        get() = editCodeReal.inputType
+        get() = binding.editCodeReal.inputType
         set(value) {
-            editCodeReal.inputType = value
+            binding.editCodeReal.inputType = value
         }
 
     var maskTheCode: Boolean = false
@@ -83,7 +87,7 @@ class CodeEditText constructor(context: Context, attrs: AttributeSet) :
             val cropped = if (value.length > maxLength) value.subSequence(0, maxLength)
             else value
             this.editable = cropped.toEditable()
-            editCodeReal.setText(cropped)
+            binding.editCodeReal.setText(cropped)
         }
 
     init {
@@ -107,7 +111,7 @@ class CodeEditText constructor(context: Context, attrs: AttributeSet) :
 
             // inputType
             if (attributes.hasValue(R.styleable.CodeEditText_android_inputType))
-                editCodeReal.inputType =
+                binding.editCodeReal.inputType =
                     attributes.getInt(R.styleable.CodeEditText_android_inputType, 0)
 
             // maskTheCode
@@ -139,7 +143,7 @@ class CodeEditText constructor(context: Context, attrs: AttributeSet) :
         super.onAttachedToWindow()
         initEnded = true
 
-        if (!isInEditMode) {
+        if (!isInEditMode) binding.apply {
             llCodeWrapper.removeAllViews()
             for (i in 0 until maxLength) {
                 View.inflate(
@@ -179,19 +183,21 @@ class CodeEditText constructor(context: Context, attrs: AttributeSet) :
     }
 
     private fun renderCode() {
-        for (i in 0 until llCodeWrapper.childCount) {
-            val itemContainer = llCodeWrapper.getChildAt(i)
+        binding.apply {
+            for (i in 0 until llCodeWrapper.childCount) {
+                val itemContainer = llCodeWrapper.getChildAt(i)
 
-            itemContainer.findViewById<TextView>(R.id.tvCode).text =
-                if (editable.length > i)
-                    (if (maskTheCode) codeMaskChar else editable[i]).toString()
-                else codePlaceholder.toString()
+                itemContainer.findViewById<TextView>(R.id.tvCode).text =
+                    if (editable.length > i)
+                        (if (maskTheCode) codeMaskChar else editable[i]).toString()
+                    else codePlaceholder.toString()
 
-            if (i == editable.length - 1 && !itemContainer.isFullyVisibleInside(
-                    hsvCodeWrapperScroller
+                if (i == editable.length - 1 && !itemContainer.isFullyVisibleInside(
+                        hsvCodeWrapperScroller
+                    )
                 )
-            )
-                hsvCodeWrapperScroller.focusOnView(itemContainer)
+                    hsvCodeWrapperScroller.focusOnView(itemContainer)
+            }
         }
         notifyCodeChanged()
     }
