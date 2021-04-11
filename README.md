@@ -1,7 +1,7 @@
 CodeEditText
 ===============
 
-[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0) [![Platform](https://img.shields.io/badge/platform-android-green.svg)](http://developer.android.com/index.html) [![API](https://img.shields.io/badge/API-16%2B-brightgreen.svg?style=flat)](https://android-arsenal.com/api?level=16) [![Download](https://badge.fury.io/gh/lukelorusso%2FCodeEditText.svg)](https://github.com/lukelorusso/CodeEditText/releases/)
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0) [![Platform](https://img.shields.io/badge/platform-android-green.svg)](http://developer.android.com/index.html) [![API](https://img.shields.io/badge/API-16%2B-brightgreen.svg?style=flat)](https://android-arsenal.com/api?level=16) [![Release](https://jitpack.io/v/lukelorusso/CodeEditText.svg)](https://jitpack.io/#lukelorusso/CodeEditText)
 
 ## Presentation ##
 
