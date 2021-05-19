@@ -7,20 +7,24 @@ group='com.github.lukelorusso'
 
 android {
     compileSdkVersion androidTargetSdkVersion
+
     buildFeatures {
         viewBinding true
     }
+
     defaultConfig {
         minSdkVersion androidMinSdkVersion
         targetSdkVersion androidTargetSdkVersion
         versionCode androidVersionCode
         versionName androidVersionName
     }
+
     buildTypes {
         release {
             minifyEnabled false
         }
     }
+
     sourceSets {
         androidTest.java.srcDirs += 'src/androidTest/kotlin'
         main.java.srcDirs += 'src/main/kotlin'

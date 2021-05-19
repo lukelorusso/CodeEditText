@@ -11,16 +11,11 @@ import com.lukelorusso.codeedittextsample.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityMainBinding
+    private val binding by viewBinding(ActivityMainBinding::inflate)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-
-        ActivityMainBinding.inflate(layoutInflater).also { inflated ->
-            binding = inflated
-            setContentView(binding.root)
-        }
+        setContentView(binding.root)
 
         binding.apply {
             //cetMyCode.maxLength = 6

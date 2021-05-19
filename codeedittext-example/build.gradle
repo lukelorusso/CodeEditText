@@ -4,9 +4,11 @@ apply plugin: 'com.github.ben-manes.versions'
 
 android {
     compileSdkVersion androidTargetSdkVersion
+
     buildFeatures {
         viewBinding true
     }
+
     defaultConfig {
         applicationId "com.lukelorusso.codeedittext"
         minSdkVersion androidMinSdkVersion
@@ -14,11 +16,13 @@ android {
         versionCode androidVersionCode
         versionName androidVersionName
     }
+
     buildTypes {
         release {
             minifyEnabled false
         }
     }
+
     sourceSets {
         androidTest.java.srcDirs += 'src/androidTest/kotlin'
         main.java.srcDirs += 'src/main/kotlin'

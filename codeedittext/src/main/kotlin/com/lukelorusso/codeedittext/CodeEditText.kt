@@ -30,7 +30,7 @@ class CodeEditText constructor(context: Context, attrs: AttributeSet) :
     }
 
     private var binding: LayoutCodeEditTextBinding =
-        LayoutCodeEditTextBinding.inflate(LayoutInflater.from(context), this, true)
+        LayoutCodeEditTextBinding.inflate(LayoutInflater.from(context))
 
     var codeMaskChar: Char = DEFAULT_CODE_MASK_CHAR
         set(value) {
@@ -95,7 +95,8 @@ class CodeEditText constructor(context: Context, attrs: AttributeSet) :
     }
 
     private fun init(context: Context, attrs: AttributeSet) {
-        inflate(context, R.layout.layout_code_edit_text, this)
+        removeAllViews()
+        addView(binding.root)
 
         val attributes = context.obtainStyledAttributes(attrs, R.styleable.CodeEditText, 0, 0)
         try {
