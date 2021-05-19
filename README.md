@@ -49,7 +49,7 @@ allprojects {
 Step 2. add the dependency:
 
 ```groovy
-    implementation 'com.github.lukelorusso:CodeEditText:1.1.0'
+    implementation 'com.github.lukelorusso:CodeEditText:1.1.1'
 ```  
 
 That's it!

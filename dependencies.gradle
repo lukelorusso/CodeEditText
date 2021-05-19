@@ -1,19 +1,20 @@
 allprojects {
     repositories {
         google()
-        jcenter()
+        mavenCentral()
+        gradlePluginPortal()
     }
 }
 
 ext {
 
     // APP VERSION
-    androidVersionCode          = 7
-    androidVersionName          = '1.1.0' // REMEMBER: also update README.md
+    androidVersionCode          = 8
+    androidVersionName          = '1.1.1' // REMEMBER: also update README.md
 
     // ANDROID VERSION
     androidMinSdkVersion        = 16
-    androidTargetSdkVersion     = 29
+    androidTargetSdkVersion     = 30
 
     // KOTLIN
     kotlinStdlibGroupId         = "org.jetbrains.kotlin"
