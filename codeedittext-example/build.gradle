@@ -34,4 +34,7 @@ dependencies {
     implementation project(':codeedittext')
     implementation kotlinStdlib
     implementation androidXAppCompat
+
+    // DEPENDENCY CHECK STRATEGY
+    dependencyUpdates.resolutionStrategy dependencyUpdatesStrategy
 }

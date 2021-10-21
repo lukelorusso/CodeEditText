@@ -56,4 +56,7 @@ afterEvaluate {
 
 dependencies {
     implementation kotlinStdlib
+
+    // DEPENDENCY CHECK STRATEGY
+    dependencyUpdates.resolutionStrategy dependencyUpdatesStrategy
 }
