@@ -1,9 +1,7 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
-apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'com.github.ben-manes.versions'
-
-group='com.github.lukelorusso'
+apply plugin: 'maven-publish'
 
 android {
     compileSdkVersion androidTargetSdkVersion
@@ -15,8 +13,6 @@ android {
     defaultConfig {
         minSdkVersion androidMinSdkVersion
         targetSdkVersion androidTargetSdkVersion
-        versionCode androidVersionCode
-        versionName androidVersionName
     }
 
     buildTypes {
@@ -29,6 +25,32 @@ android {
         androidTest.java.srcDirs += 'src/androidTest/kotlin'
         main.java.srcDirs += 'src/main/kotlin'
         test.java.srcDirs += 'src/test/kotlin'
+    }
+}
+
+afterEvaluate {
+    publishing {
+        publications {
+            // Creates a Maven publication called "release".
+            release(MavenPublication) {
+                // Applies the component for the release build variant.
+                from components.release
+
+                // You can then customize attributes of the publication as shown below.
+                groupId = androidGroupId
+                artifactId = androidArtifactId
+                version = androidVersionName
+            }
+            // Creates a Maven publication called “debug”.
+            /*debug(MavenPublication) {
+                // Applies the component for the debug build variant.
+                from components.debug
+
+                groupId = androidGroupId
+                artifactId = androidArtifactId + '_debug'
+                version = androidVersionName
+            }*/
+        }
     }
 }
 

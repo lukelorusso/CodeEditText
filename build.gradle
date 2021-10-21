@@ -2,8 +2,8 @@
 apply from: 'dependencies.gradle'
 
 buildscript {
-    ext.gradle_version = '4.2.0'
-    ext.kotlin_version = '1.5.0'
+    ext.gradle_version = '7.0.2'
+    ext.kotlin_version = '1.5.31'
     repositories {
         google()
         mavenCentral()

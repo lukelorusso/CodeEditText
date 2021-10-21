@@ -9,8 +9,10 @@ allprojects {
 ext {
 
     // APP VERSION
-    androidVersionCode          = 8
-    androidVersionName          = '1.1.1' // REMEMBER: also update README.md
+    androidVersionCode          = 9
+    androidVersionName          = '1.2.0' // REMEMBER: also update README.md
+    androidGroupId              = 'com.lukelorusso'
+    androidArtifactId           = 'codeedittext'
 
     // ANDROID VERSION
     androidMinSdkVersion        = 16

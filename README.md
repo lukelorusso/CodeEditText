@@ -35,13 +35,13 @@ What you got:
 
 ## How to use it? ##
 
-Step 1. add the JitPack repository to your ROOT build.gradle at the end of repositories:
+Step 1. be sure that Maven Central is already present in your ROOT build.gradle file, in the repositories section:
 
 ```groovy
 allprojects {
     repositories {
         ...
-        maven { url 'https://jitpack.io' }
+        mavenCentral()
     }
 }
 ```
@@ -49,7 +49,7 @@ allprojects {
 Step 2. add the dependency:
 
 ```groovy
-    implementation 'com.github.lukelorusso:CodeEditText:1.1.1'
+    implementation 'com.lukelorusso:codeedittext:1.2.0'
 ```  
 
 That's it!
