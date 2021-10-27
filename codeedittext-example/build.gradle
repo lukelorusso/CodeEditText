@@ -7,6 +7,7 @@ android {
 
     buildFeatures {
         viewBinding true
+        compose true
     }
 
     defaultConfig {
@@ -27,6 +28,19 @@ android {
         androidTest.java.srcDirs += 'src/androidTest/kotlin'
         main.java.srcDirs += 'src/main/kotlin'
         test.java.srcDirs += 'src/test/kotlin'
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion androidxComposeVer
+    }
+
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_11.toString()
     }
 }
 
