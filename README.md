@@ -160,6 +160,14 @@ Just copy it to your `res/layout` folder and start to change dimensions, text's 
 
 Feel free to checkout and launch the example app 🎡
 
+Also, see where using this library has been the perfect choice:
+
+[![Swissquote Trading](press/swissquote_trading.png)](https://play.google.com/store/apps/details?id=com.swissquote.android)  
+[**Swissquote Trading**](https://play.google.com/store/apps/details?id=com.swissquote.android)
+
+[![Knave](press/knave.png)](https://play.google.com/store/apps/details?id=com.knave.client)  
+[**Knave**](https://play.google.com/store/apps/details?id=com.knave.client)
+
 - - -
 
 # Copyright #
