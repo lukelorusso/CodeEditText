@@ -9,6 +9,9 @@ This is the source code of an Android library: `-=:[ CodeEditText ]:=-`
 
 📃 Check also the [**Medium article**](https://blog.prototypr.io/android-codeedittext-a-custom-edittext-tailor-made-for-code-and-password-input-27719cfe28e6?source=friends_link&sk=611e21eba68ff9d095b5e2aad1a6535e) about it!
 
+`ATTENTION`: <ins>this project is not maintained anymore</ins>, **but there's a NEW, BETTER ONE!**  
+Checkout [**CodeTextField**](https://github.com/lukelorusso/CodeTextField): completely redesigned using [**Jetpack Compose**](https://developer.android.com/jetpack/compose/interop/adding), with less limitations and way more options!
+
 - - -
 
 ## Why would you need it? ##
